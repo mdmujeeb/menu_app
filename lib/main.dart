@@ -4,6 +4,7 @@ import './pages/meal_details_page.dart';
 import './pages/categories_page.dart';
 import './pages/category_meals_page.dart';
 import './pages/tabs_page.dart';
+import './pages/filters_page.dart';
 
 void main() => runApp(DeliMealsApp());
 
@@ -36,6 +37,7 @@ class DeliMealsApp extends StatelessWidget {
         '/': (ctx) => TabsPage(),
         CategoryMealsPage.ROUTE_NAME: (ctx) => CategoryMealsPage(),
         MealDetailsPage.ROUTE_NAME: (ctx) => MealDetailsPage(),
+        FiltersPage.ROUTE_NAME: (ctx) => FiltersPage(),
       },
       onGenerateRoute: (settings) {
         print(settings.arguments);
