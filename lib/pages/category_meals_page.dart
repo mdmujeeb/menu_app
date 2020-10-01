@@ -22,12 +22,6 @@ class _CategoryMealsPageState extends State<CategoryMealsPage> {
   String _categoryTitle;
   List<Meal> _categoryMeals;
 
-  void _deleteMeal(id) {
-    setState(() {
-      _categoryMeals.removeWhere((meal) => meal.id == id);
-    });
-  }
-
   @override
   void didChangeDependencies() {
     args = ModalRoute.of(context).settings.arguments as Map<String, String>;
@@ -55,7 +49,6 @@ class _CategoryMealsPageState extends State<CategoryMealsPage> {
             duration: _categoryMeals[index].duration,
             complexity: _categoryMeals[index].complexity,
             affordability: _categoryMeals[index].affordability,
-            removeItem: _deleteMeal,
           );
         },
         itemCount: _categoryMeals.length,

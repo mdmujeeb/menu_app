@@ -6,6 +6,11 @@ import '../dummy_data.dart';
 class MealDetailsPage extends StatelessWidget {
   static const ROUTE_NAME = '/meal-details';
 
+  final Function _isMealFavorite;
+  final Function _toggleFavoriteMeal;
+
+  MealDetailsPage(this._isMealFavorite, this._toggleFavoriteMeal);
+
   Widget _buildSectionTitle(BuildContext context, String text) {
     return Container(
         child: Text(
@@ -75,10 +80,11 @@ class MealDetailsPage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.delete),
-          onPressed: () {
-            Navigator.of(context).pop(meal.id);
-          }),
+        child: Icon(
+          _isMealFavorite(meal.id) ? Icons.favorite : Icons.favorite_border,
+        ),
+        onPressed: () => _toggleFavoriteMeal(meal.id),
+      ),
     );
   }
 }

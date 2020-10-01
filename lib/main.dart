@@ -26,6 +26,7 @@ class _DeliMealsAppState extends State<DeliMealsApp> {
   };
 
   List<Meal> _availableMeals = DUMMY_MEALS;
+  List<Meal> _favoriteMeals = [];
 
   void _setFilterData(Map<String, bool> filterData) {
     setState(() {
@@ -42,6 +43,23 @@ class _DeliMealsAppState extends State<DeliMealsApp> {
               (!_filters['vegan'] || meal.isVegan))
           .toList();
     });
+  }
+
+  void _toggleFavoriteMeal(String mealId) {
+    final int index = _favoriteMeals.indexWhere((meal) => meal.id == mealId);
+    if (index > -1) {
+      setState(() {
+        _favoriteMeals.removeAt(index);
+      });
+    } else {
+      setState(() {
+        _favoriteMeals.add(DUMMY_MEALS.firstWhere((meal) => meal.id == mealId));
+      });
+    }
+  }
+
+  bool _isMealFavorite(String mealId) {
+    return _favoriteMeals.any((meal) => meal.id == mealId);
   }
 
   @override
@@ -68,10 +86,11 @@ class _DeliMealsAppState extends State<DeliMealsApp> {
             )),
       ),
       routes: {
-        '/': (ctx) => TabsPage(),
+        '/': (ctx) => TabsPage(_favoriteMeals),
         CategoryMealsPage.ROUTE_NAME: (ctx) =>
             CategoryMealsPage(_availableMeals),
-        MealDetailsPage.ROUTE_NAME: (ctx) => MealDetailsPage(),
+        MealDetailsPage.ROUTE_NAME: (ctx) =>
+            MealDetailsPage(_isMealFavorite, _toggleFavoriteMeal),
         FiltersPage.ROUTE_NAME: (ctx) => FiltersPage(_filters, _setFilterData),
       },
       onGenerateRoute: (settings) {
